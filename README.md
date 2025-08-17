@@ -6,3 +6,4 @@ Dato del alumno
 -Apellido: Pozos Zecua
 -Materia: Tecnología web
 -Periodo: Otoño 2025
+Descripcion breve: Proyecto de ejemplo para repasar comandos basicos de UNIX, configurar un repositorio local con Git y uso basicos de comandos de Git para gestionar versiones de proyecto.
