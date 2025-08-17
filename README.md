@@ -5,3 +5,4 @@ Dato del alumno
 -Nombre: José Eduardo
 -Apellido: Pozos Zecua
 -Materia: Tecnología web
+-Periodo: Otoño 2025
