@@ -16,3 +16,8 @@ h2 {
 color: #d1633c;
 font-size: 1em;
 }
+
+img {
+  width: 550px;   
+  height: auto;   
+}
