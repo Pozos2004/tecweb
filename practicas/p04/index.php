@@ -30,5 +30,97 @@
         echo '<li>$house*5 es inválida porque el símbolo * no está permitido.</li>';
         echo '</ul>';
     ?>
+    <h2>Ejercicio 2</h2>
+    <?php
+        // Definir variables
+        $a = "ManejadorSQL";
+        $b = 'MySQL';
+        $c = &$a;
+
+        echo "<p><b>Valores iniciales:</b></p>";
+        echo "a = $a <br/>";
+        echo "b = $b <br/>";
+        echo "c = $c <br/>";
+
+        // Nuevas asignaciones
+        $a = "PHP server";
+        $b = &$a;
+
+        echo "<p><b>Después de nuevas asignaciones:</b></p>";
+        echo "a = $a <br/>";
+        echo "b = $b <br/>";
+        echo "c = $c <br/>";
+
+        echo "<p><i>Descripción:</i> En el segundo bloque, se reasigna <code>\$a</code> y <code>\$b</code> 
+        para que apunten a la misma referencia. Como <code>\$c</code> también estaba referenciado a 
+        <code>\$a</code>, los tres comparten el mismo valor.</p>";
+    ?>
+
+    <h2>Ejercicio 3</h2>
+    <?php
+        $a = "PHP5";
+        echo "a = $a <br/>";
+        $z[] = &$a;
+        echo "z[0] = ".$z[0]."<br/>";
+        $b = "5a version de PHP";
+        echo "b = $b <br/>";
+        $c = $b * 10; // al ser string, se intenta convertir a número => 0
+        echo "c = $c <br/>";
+        $a .= $b;
+        echo "a = $a <br/>";
+        $b *= $c;
+        echo "b = $b <br/>";
+        $z[0] = "MySQL";
+        echo "z[0] = ".$z[0]."<br/>";
+    ?>
+
+    <h2>Ejercicio 4</h2>
+    <?php
+        echo "a = ".$GLOBALS['a']."<br/>";
+        echo "b = ".$GLOBALS['b']."<br/>";
+        echo "c = ".$GLOBALS['c']."<br/>";
+    ?>
+
+    <h2>Ejercicio 5</h2>
+    <?php
+        $a = "7 personas";
+        $b = (integer) $a; 
+        $a = "9E3";
+        $c = (double) $a; 
+
+        echo "a = $a <br/>";
+        echo "b = $b <br/>";
+        echo "c = $c <br/>";
+    ?>
+
+    <h2>Ejercicio 6</h2>
+    <?php
+        $a = "0";
+        $b = "TRUE";
+        $c = FALSE;
+        $d = ($a OR $b);
+        $e = ($a AND $c);
+        $f = ($a XOR $b);
+
+        echo "<p><b>var_dump de cada variable:</b></p>";
+        var_dump($a); echo "<br/>";
+        var_dump($b); echo "<br/>";
+        var_dump($c); echo "<br/>";
+        var_dump($d); echo "<br/>";
+        var_dump($e); echo "<br/>";
+        var_dump($f); echo "<br/>";
+
+        echo "<p>Para mostrar valores booleanos en texto se puede usar la función <code>var_export()</code> o 
+        <code>json_encode()</code>:</p>";
+        echo "c (echo) = ".json_encode($c)."<br/>";
+        echo "e (echo) = ".json_encode($e)."<br/>";
+    ?>
+
+    <h2>Ejercicio 7</h2>
+    <?php
+        echo "Versión de Apache/PHP: ".$_SERVER['SERVER_SOFTWARE']."<br/>";
+        echo "Sistema operativo del servidor: ".PHP_OS."<br/>";
+        echo "Idioma del navegador (cliente): ".$_SERVER['HTTP_ACCEPT_LANGUAGE']."<br/>";
+    ?>
 </body>
 </html>
