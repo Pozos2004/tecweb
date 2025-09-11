@@ -1,0 +1,98 @@
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      margin: 20px;
+    }
+
+    h1 {
+      font-size: 22px;
+    }
+
+    h2 {
+      font-size: 18px;
+      margin-top: 20px;
+      border-top: 2px solid #000;
+      padding-top: 5px;
+    }
+
+    .form-group {
+      margin: 10px 0;
+    }
+
+    label {
+      display: inline-block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    textarea,
+    select {
+      display: block;
+      width: 300px;
+      padding: 5px;
+      margin-bottom: 10px;
+      border: 1px solid #999;
+    }
+
+    textarea {
+      height: 80px;
+    }
+
+    .character-count {
+      font-size: 12px;
+      color: #555;
+    }
+
+    .radio-group label,
+    .checkbox-group label {
+      display: block;
+      margin: 3px 0;
+      font-weight: normal;
+    }
+
+    button {
+      padding: 5px 15px;
+      margin: 10px 5px 0 0;
+      border: 1px solid #666;
+      background: #eee;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #ddd;
+    }
+
+    /* Confirmación pantalla completa en verde */
+    .confirmation {
+      display: none;
+      background: #c6e2b5;
+      color: #000;
+      min-height: 100vh;
+      padding: 30px;
+    }
+
+    .confirmation h2 {
+      color: #004400;
+      border: none;
+      margin-top: 0;
+    }
+
+    .confirmation p {
+      margin: 5px 0;
+    }
+
+    .confirmation strong {
+      color: #222;
+    }
+
+    .confirmation-details {
+      margin-top: 15px;
+    }
+
+    .confirmation-details span {
+      color: #550055;
+      font-style: italic;
+    }
