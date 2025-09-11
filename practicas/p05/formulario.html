@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Concurso "Chidos mis Tenis"</title>
+</head>
+<body>
+    <div class="container">
+        <form id="tennisContestForm">
+            <h1>Registro al Concurso "Chidos mis Tenis"</h1>
+            
+            <p>¿Quieres cambiar tus viejos tenis por un par personalizado de Tenis Mike®?</p>
+            <p>Justifica el por qué tus tenis se <em>tienen que</em> ir y tú puedes ser uno de los diez afortunados ganadores.</p>
+            
+            <h2>Información de Participación</h2>
+            
+            <div class="form-group">
+                <label for="name">Nombre:</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="email">Dirección de E-mail:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="phone">Número Telefónico:</label>
+                <input type="tel" id="phone" name="phone" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="story">Mis tenis son tan feos porque... (no más de 300 caracteres)</label>
+                <textarea id="story" name="story" maxlength="300" required></textarea>
+                <div class="character-count"><span id="charCount">0</span>/300 caracteres</div>
+            </div>
+            
+            <h2>Diseña tus Mike personalizados:</h2>
+            
+            <div class="form-group">
+                <p>Color (escoge uno):</p>
+                <div class="radio-group">
+                    <label><input type="radio" name="color" value="Rojo" required> Rojo</label>
+                    <label><input type="radio" name="color" value="Azul"> Azul</label>
+                    <label><input type="radio" name="color" value="Negro"> Negro</label>
+                    <label><input type="radio" name="color" value="Plateado"> Plateado</label>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <p>Características (escoge tantas como quieras):</p>
+                <div class="checkbox-group">
+                    <label><input type="checkbox" name="features" value="Cordones Brillantes"> Cordones Brillantes</label>
+                    <label><input type="checkbox" name="features" value="Logo Metálico"> Logo Metálico</label>
+                    <label><input type="checkbox" name="features" value="Suela Luminosa"> Suela Luminosa</label>
+                    <label><input type="checkbox" name="features" value="WiFi-integrado"> WiFi-integrado</label>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="size">Talla (las medidas reflejan el estándar masculino):</label>
+                <select id="size" name="size" required>
+                    <option value="">Selecciona tu talla</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                </select>
+            </div>
+            
+            <button type="submit">Enviar registro</button>
+        </form>
+    </div>
+</body>
+</html>
