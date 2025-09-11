@@ -95,6 +95,47 @@
             </div>
         </div>
     </div>
+    
+    <script>
+        document.getElementById('tennisContestForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Obtener valores del formulario
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const story = document.getElementById('story').value;
+            
+            // Obtener color seleccionado
+            const color = document.querySelector('input[name="color"]:checked').value;
+            
+            // Obtener talla
+            const size = document.getElementById('size').value;
+            
+            // Mostrar valores en la confirmación
+            document.getElementById('confirm-name').textContent = name;
+            document.getElementById('confirm-email').textContent = email;
+            document.getElementById('confirm-phone').textContent = phone;
+            document.getElementById('confirm-story').textContent = story;
+            document.getElementById('confirm-color').textContent = color;
+            document.getElementById('confirm-size').textContent = size;
+            
+            // Ocultar formulario y mostrar confirmación
+            document.getElementById('tennisContestForm').style.display = 'none';
+            document.getElementById('confirmation').style.display = 'block';
+        });
+        
+        // Contador de caracteres para la historia
+        document.getElementById('story').addEventListener('input', function() {
+            const charCount = this.value.length;
+            document.getElementById('charCount').textContent = charCount;
+            
+            if (charCount > 300) {
+                this.value = this.value.substring(0, 300);
+                document.getElementById('charCount').textContent = 300;
+            }
+        });
+    </script>
 
     </div>
 </body>
