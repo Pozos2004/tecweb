@@ -9,7 +9,7 @@ include("src/funciones.php");
     <title>Práctica 6</title>
 </head>
 <body>
-    <h1>Práctica 6 – Funciones, Arreglos y Ciclos en PHP</h1>
+    <h1>Práctica 6</h1>
 
     <!-- Ejercicio 1 -->
     <h2>Ejercicio 1: Comprobar múltiplo de 5 y 7</h2>
@@ -20,7 +20,7 @@ include("src/funciones.php");
     <?php
         if(isset($_GET['numero'])) {
             $n = $_GET['numero'];
-            echo esMultiplo5y7($n) ? "✅ $n es múltiplo de 5 y 7" : "❌ $n NO es múltiplo de 5 y 7";
+            echo esMultiplo5y7($n) ? " $n es múltiplo de 5 y 7" : " $n NO es múltiplo de 5 y 7";
         }
     ?>
 
@@ -55,7 +55,7 @@ include("src/funciones.php");
     <hr>
 
     <!-- Ejercicio 4 -->
-    <h2>Ejercicio 4: Arreglo ASCII (97-122)</h2>
+    <h2>Ejercicio 4: Arreglo ASCII</h2>
     <table border="1" cellpadding="5">
         <tr><th>Código ASCII</th><th>Letra</th></tr>
         <?php
@@ -106,7 +106,7 @@ include("src/funciones.php");
                 print_r($resultado);
                 echo "</pre>";
             } else {
-                echo "❌ No se encontró esa matrícula.";
+                echo "No se encontró esa matrícula.";
             }
         } else {
             echo "<h3>Todos los autos registrados:</h3><pre>";
