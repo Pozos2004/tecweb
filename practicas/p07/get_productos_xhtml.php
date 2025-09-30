@@ -1,6 +1,6 @@
 <?php
-    $tope = null;   // inicializamos
-    $rows = [];     // inicializamos arreglo de resultados
+    $tope = null;
+    $rows = [];
 
     if (isset($_GET['tope'])) {
         $tope = $_GET['tope'];
@@ -16,6 +16,45 @@
         /** Consulta */
         if ($result = $link->query("SELECT * FROM productos WHERE unidades <= $tope")) {
             $rows = $result->fetch_all(MYSQLI_ASSOC);
+            
+            // FUNCIÓN PARA DETECTAR LA EXTENSIÓN CORRECTA
+            function getImageWithExtension($baseName) {
+                $extensions = ['.jpg', '.jpeg', '.png', '.gif'];
+                foreach ($extensions as $ext) {
+                    if (file_exists($baseName . $ext)) {
+                        return $baseName . $ext;
+                    }
+                }
+                return $baseName . '.jpg'; // Por defecto
+            }
+            
+            // ASIGNAR IMÁGENES CON EXTENSIÓN CORRECTA
+            foreach ($rows as &$row) {
+                $nombre = $row['nombre'];
+                
+                // Mapeo de nombres
+                if (strpos($nombre, 'Laptop') !== false || strpos($nombre, 'Inspiron') !== false) {
+                    $row['imagen'] = getImageWithExtension('img/dell_inspiron');
+                } elseif (strpos($nombre, 'Smartphone') !== false || strpos($nombre, 'Galaxy') !== false) {
+                    $row['imagen'] = getImageWithExtension('img/galaxy_a32');
+                } elseif (strpos($nombre, 'Teclado') !== false || strpos($nombre, 'Mecánico') !== false) {
+                    $row['imagen'] = getImageWithExtension('img/teclado_g413');
+                } elseif (strpos($nombre, 'Monitor') !== false || strpos($nombre, 'LED') !== false) {
+                    $row['imagen'] = getImageWithExtension('img/lg_monitor');
+                } elseif (strpos($nombre, 'Impresora') !== false || strpos($nombre, 'Multifuncional') !== false) {
+                    $row['imagen'] = getImageWithExtension('img/hp_deskjet');
+                } elseif (strpos($nombre, 'TERMO') !== false || strpos($nombre, 'DIGITAL') !== false) {
+                    $row['imagen'] = getImageWithExtension('img/termo');
+                } elseif (strpos($nombre, 'Pantuflas') !== false || strpos($nombre, 'Bob Esponja') !== false) {
+                    $row['imagen'] = getImageWithExtension('img/pantuflas');
+                } elseif (strpos($nombre, 'Lámpara') !== false || strpos($nombre, 'Luna') !== false) {
+                    $row['imagen'] = getImageWithExtension('img/lampara');
+                } else {
+                    $row['imagen'] = getImageWithExtension('img/default');
+                }
+            }
+            unset($row);
+            
             $result->free();
         }
         $link->close();
@@ -66,17 +105,23 @@
                             <td><?= $row['nombre'] ?></td>
                             <td><?= $row['marca'] ?></td>
                             <td><?= $row['modelo'] ?></td>
-                            <td><?= $row['precio'] ?></td>
+                            <td>$<?= number_format($row['precio'], 2) ?></td>
                             <td><?= $row['unidades'] ?></td>
-                            <td><?= utf8_encode($row['detalles']) ?></td>
-                            <td><img src="<?= $row['imagen'] ?>" width="80"/></td>
+                            <td><?= $row['detalles'] ?></td>
+                            <td>
+                                <img src="<?= $row['imagen'] ?>" alt="<?= $row['nombre'] ?>" width="80" height="80" style="object-fit: cover;"/>
+                            </td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
             </table>
         <?php else : ?>
-            <script>alert('No hay productos con ese número de unidades');</script>
+            <div class="alert alert-warning">
+                No hay productos con ese número de unidades
+            </div>
         <?php endif; ?>
+        
+        <a href="?" class="btn btn-secondary">Nueva búsqueda</a>
     <?php endif; ?>
 </body>
 </html>
