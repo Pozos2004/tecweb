@@ -13,8 +13,20 @@
             die('Falló la conexión: '.$link->connect_error.'<br/>');
         }
 
-        /** Consulta */
-        if ($result = $link->query("SELECT * FROM productos WHERE unidades <= $tope")) {
+        /** Consulta - MANEJAR 'N' COMO VALOR ESPECIAL */
+        if ($tope === 'N' || $tope === 'n') {
+            // Si tope es 'N', mostrar todos los productos
+            $sql = "SELECT * FROM productos";
+        } else {
+            // Validar que sea número para otros casos
+            if (!is_numeric($tope)) {
+                die('Error: El parámetro "tope" debe ser un número válido o "N"');
+            }
+            $tope = (int)$tope;
+            $sql = "SELECT * FROM productos WHERE unidades <= $tope";
+        }
+
+        if ($result = $link->query($sql)) {
             $rows = $result->fetch_all(MYSQLI_ASSOC);
             
             // FUNCIÓN PARA DETECTAR LA EXTENSIÓN CORRECTA
@@ -74,14 +86,18 @@
         <h3>Consultar productos por límite de unidades</h3>
         <form method="get" action="">
             <div class="form-group">
-                <label for="tope">Número máximo de unidades:</label>
-                <input type="number" class="form-control" name="tope" id="tope" required>
+                <label for="tope">Número máximo de unidades (o 'N' para todos):</label>
+                <input type="text" class="form-control" name="tope" id="tope" required>
             </div>
             <button type="submit" class="btn btn-primary">Buscar</button>
         </form>
     <?php else: ?>
         <!-- Título -->
-        <h3>PRODUCTOS (Unidades ≤ <?= htmlspecialchars($tope) ?>)</h3>
+        <?php if ($tope === 'N' || $tope === 'n') : ?>
+            <h3>TODOS LOS PRODUCTOS</h3>
+        <?php else: ?>
+            <h3>PRODUCTOS (Unidades ≤ <?= htmlspecialchars($tope) ?>)</h3>
+        <?php endif; ?>
         <br/>
 
         <?php if (!empty($rows)) : ?>
@@ -117,7 +133,7 @@
             </table>
         <?php else : ?>
             <div class="alert alert-warning">
-                No hay productos con ese número de unidades
+                No hay productos que mostrar
             </div>
         <?php endif; ?>
         
