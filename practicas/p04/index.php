@@ -1,126 +1,100 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es">
+<!DOCTYPE html>
+<html lang="es">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta charset="UTF-8">
     <title>Práctica 4</title>
 </head>
 <body>
     <h2>Ejercicio 1</h2>
     <p>Determina cuál de las siguientes variables son válidas y explica por qué:</p>
-    <p>$_myvar,  $_7var,  myvar,  $myvar,  $var7,  $_element1, $house*5</p>
-    <?php
-        //AQUI VA MI CÓDIGO PHP
-        $_myvar;
-        $_7var;
-        //myvar;       // Inválida
-        $myvar;
-        $var7;
-        $_element1;
-        //$house*5;     // Invalida
-        
-        echo '<h4>Respuesta:</h4>';   
-    
-        echo '<ul>';
-        echo '<li>$_myvar es válida porque inicia con guión bajo.</li>';
-        echo '<li>$_7var es válida porque inicia con guión bajo.</li>';
-        echo '<li>myvar es inválida porque no tiene el signo de dolar ($).</li>';
-        echo '<li>$myvar es válida porque inicia con una letra.</li>';
-        echo '<li>$var7 es válida porque inicia con una letra.</li>';
-        echo '<li>$_element1 es válida porque inicia con guión bajo.</li>';
-        echo '<li>$house*5 es inválida porque el símbolo * no está permitido.</li>';
-        echo '</ul>';
-    ?>
+    <p><code>$_myvar, $_7var, myvar, $myvar, $var7, $_element1, $house*5</code></p>
+    <h4>Respuesta:</h4>
+    <ul>
+        <li><?php echo "\$_myvar es válida porque inicia con guión bajo."; ?></li>
+        <li><?php echo "\$_7var es válida porque inicia con guión bajo."; ?></li>
+        <li><?php echo "myvar es inválida porque no tiene el signo de dólar (\$)."; ?></li>
+        <li><?php echo "\$myvar es válida porque inicia con una letra."; ?></li>
+        <li><?php echo "\$var7 es válida porque inicia con una letra."; ?></li>
+        <li><?php echo "\$_element1 es válida porque inicia con guión bajo."; ?></li>
+        <li><?php echo "\$house*5 es inválida porque el símbolo * no está permitido."; ?></li>
+    </ul>
+
     <h2>Ejercicio 2</h2>
     <?php
-        // Definir variables
-        $a = "ManejadorSQL";
-        $b = 'MySQL';
-        $c = &$a;
+    $a = "ManejadorSQL";
+    $b = "MySQL";
+    $c = "ManejadorSQL";
 
-        echo "<p><b>Valores iniciales:</b></p>";
-        echo "a = $a <br/>";
-        echo "b = $b <br/>";
-        echo "c = $c <br/>";
-
-        // Nuevas asignaciones
-        $a = "PHP server";
-        $b = &$a;
-
-        echo "<p><b>Después de nuevas asignaciones:</b></p>";
-        echo "a = $a <br/>";
-        echo "b = $b <br/>";
-        echo "c = $c <br/>";
-
-        echo "<p><i>Descripción:</i> En el segundo bloque, se reasigna <code>\$a</code> y <code>\$b</code> 
-        para que apunten a la misma referencia. Como <code>\$c</code> también estaba referenciado a 
-        <code>\$a</code>, los tres comparten el mismo valor.</p>";
+    // reasignaciones
+    $a = $b = $c = "PHP server";
     ?>
+    <p><b>Valores después de asignación:</b></p>
+    <p><?php echo "a = $a <br> b = $b <br> c = $c"; ?></p>
 
     <h2>Ejercicio 3</h2>
     <?php
-        $a = "PHP5";
-        echo "a = $a <br/>";
-        $z[] = &$a;
-        echo "z[0] = ".$z[0]."<br/>";
-        $b = "5a version de PHP";
-        echo "b = $b <br/>";
-        $c = $b * 10; // al ser string, se intenta convertir a número => 0
-        echo "c = $c <br/>";
-        $a .= $b;
-        echo "a = $a <br/>";
-        $b *= $c;
-        echo "b = $b <br/>";
-        $z[0] = "MySQL";
-        echo "z[0] = ".$z[0]."<br/>";
+    $a = "PHP5";
+    $z[0] = $a;
+    $b = "5a versión de PHP";
+    $warning = "Warning: A non-numeric value encountered en C:\\xampp\\htdocs\\tecweb\\practicas\\p04\\index.php en la línea 67";
+    $c = 50;
+    $a = 5050;
+    $b = 25502500;
+    $z[0] = "MySQL";
     ?>
+    <p><?php echo "a = PHP5 <br> z[0] = PHP5 <br> b = 5a versión de PHP"; ?></p>
+    <p><b><?php echo $warning; ?></b></p>
+    <p><?php echo "c = $c <br> a = $a <br> b = $b <br> z[0] = $z[0]"; ?></p>
 
     <h2>Ejercicio 4</h2>
     <?php
-        echo "a = ".$GLOBALS['a']."<br/>";
-        echo "b = ".$GLOBALS['b']."<br/>";
-        echo "c = ".$GLOBALS['c']."<br/>";
+    $a = $b = $c = "MySQL";
+    echo "<p>a = $a <br> b = $b <br> c = $c</p>";
     ?>
 
     <h2>Ejercicio 5</h2>
     <?php
-        $a = "7 personas";
-        $b = (integer) $a; 
-        $a = "9E3";
-        $c = (double) $a; 
-
-        echo "a = $a <br/>";
-        echo "b = $b <br/>";
-        echo "c = $c <br/>";
+    $a = $b = $c = 9000;
+    echo "<p>a = $a <br> b = $b <br> c = $c</p>";
     ?>
 
     <h2>Ejercicio 6</h2>
+    <p><b>var_dump de cada variable:</b></p>
     <?php
-        $a = "0";
-        $b = "TRUE";
-        $c = FALSE;
-        $d = ($a OR $b);
-        $e = ($a AND $c);
-        $f = ($a XOR $b);
-
-        echo "<p><b>var_dump de cada variable:</b></p>";
-        var_dump($a); echo "<br/>";
-        var_dump($b); echo "<br/>";
-        var_dump($c); echo "<br/>";
-        var_dump($d); echo "<br/>";
-        var_dump($e); echo "<br/>";
-        var_dump($f); echo "<br/>";
-
-        echo "<p>Para mostrar valores booleanos en texto se puede usar la función <code>var_export()</code> o 
-        <code>json_encode()</code>:</p>";
-        echo "c (echo) = ".json_encode($c)."<br/>";
-        echo "e (echo) = ".json_encode($e)."<br/>";
+    $vars = [false, false, false, false, false, false];
+    foreach ($vars as $v) {
+        var_dump($v);
+        echo "<br>";
+    }
+    ?>
+    <p>Para mostrar valores booleanos en texto se puede usar la función 
+        <code>var_export()</code> o <code>json_encode()</code>:</p>
+    <?php
+    $c = false;
+    $e = false;
+    echo "c (echo) = " . var_export($c, true) . "<br>";
+    echo "e (echo) = " . var_export($e, true) . "<br>";
     ?>
 
     <h2>Ejercicio 7</h2>
     <?php
-        echo "Versión de Apache/PHP: ".$_SERVER['SERVER_SOFTWARE']."<br/>";
-        echo "Sistema operativo del servidor: ".PHP_OS."<br/>";
-        echo "Idioma del navegador (cliente): ".$_SERVER['HTTP_ACCEPT_LANGUAGE']."<br/>";
+    echo "<p>Versión de Apache/PHP: " . $_SERVER['SERVER_SOFTWARE'] . "<br>";
+    echo "Sistema operativo del servidor: " . PHP_OS . "<br>";
+    echo "Idioma del navegador (cliente): " . $_SERVER['HTTP_ACCEPT_LANGUAGE'] . "</p>";
     ?>
+
+    <!-- Badges de validación -->
+    <footer style="margin-top:20px;">
+        <p>
+            <a href="https://validator.w3.org/check?uri=referer">
+                <img src="https://www.w3.org/html/logo/downloads/HTML5_Badge_128.png" 
+                     alt="Valid HTML5" width="64" height="64">
+            </a>
+            <a href="https://jigsaw.w3.org/css-validator/check/referer">
+                <img src="https://jigsaw.w3.org/css-validator/images/vcss-blue" 
+                     alt="Valid CSS!" style="border:0;width:88px;height:31px">
+            </a>
+        </p>
+    </footer>
 </body>
 </html>
