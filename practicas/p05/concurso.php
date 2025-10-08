@@ -5,38 +5,58 @@
   <meta http-equiv="content-type" content="text/html;charset=utf-8" />
   <title>Registro Completado</title>
   <style type="text/css">
-    body {margin: 20px; background-color: #C4DF9B; font-family: Verdana, sans-serif;}
-    h1 {color: #005825; border-bottom: 1px solid #005825;}
+    body {
+      margin: 20px; 
+      background-color: #C4DF9B;
+      font-family: Verdana, Helvetica, sans-serif;
+      font-size: 90%;
+    }
+    h1 {
+      color: #005825;
+      border-bottom: 1px solid #005825;
+    }
+    h2 {
+      color: #4A0048;
+      font-size: 1.2em;
+    }
+    ul { list-style-type: none; }
   </style>
 </head>
+
 <body>
   <h1>¡MUCHAS GRACIAS!</h1>
-  <p>Hemos recibido tu registro al concurso de Tenis Mike&#174; “Chidos mis Tenis”.</p>
 
-  <h2>Información Personal</h2>
+  <p>Gracias por participar en el concurso de Tenis Mike&#174; "Chidos mis Tenis".</p>
+
+  <h2>Acerca de ti:</h2>
   <ul>
-    <li><strong>Nombre:</strong> <?php echo $_POST['name']; ?></li>
-    <li><strong>Email:</strong> <?php echo $_POST['email']; ?></li>
-    <li><strong>Teléfono:</strong> <?php echo $_POST['phone']; ?></li>
+    <li><strong>Nombre:</strong> <em><?php echo $_POST['name'] ?? ''; ?></em></li>
+    <li><strong>E-mail:</strong> <em><?php echo $_POST['email'] ?? ''; ?></em></li>
+    <li><strong>Teléfono:</strong> <em><?php echo $_POST['phone'] ?? ''; ?></em></li>
   </ul>
-  <p><strong>Tu historia:</strong> <?php echo $_POST['story']; ?></p>
 
-  <h2>Diseño Elegido</h2>
+  <p><strong>Tu historia:</strong> <em><?php echo $_POST['story'] ?? ''; ?></em></p>
+
+  <h2>Tu diseño de tenis:</h2>
   <ul>
-    <li><strong>Color:</strong> <?php echo $_POST['color']; ?></li>
+    <li><strong>Color:</strong> <em><?php echo $_POST['color'] ?? ''; ?></em></li>
+
     <?php
-      if (!empty($_POST['features'])) {
-        foreach ($_POST['features'] as $key => $value) {
-          echo "<li><strong>Característica ".($key+1).":</strong> $value</li>";
-        }
+    if (!empty($_POST['features'])) {
+      $features = $_POST['features'];
+      foreach ($features as $i => $f) {
+        echo '<li><strong>Característica '.($i+1).':</strong> <em>'.$f.'</em></li>';
       }
+    } else {
+      echo '<li><em>Sin características adicionales seleccionadas.</em></li>';
+    }
     ?>
-    <li><strong>Talla:</strong> <?php echo $_POST['size']; ?></li>
+    <li><strong>Talla:</strong> <em><?php echo $_POST['size'] ?? ''; ?></em></li>
   </ul>
 
   <p>
     <a href="http://validator.w3.org/check?uri=referer">
-      <img src="http://www.w3.org/Icons/valid-xhtml10" alt="Valid XHTML" height="31" width="88" />
+      <img src="http://www.w3.org/Icons/valid-xhtml10" alt="Valid XHTML 1.0 Strict" height="31" width="88" />
     </a>
   </p>
 </body>
