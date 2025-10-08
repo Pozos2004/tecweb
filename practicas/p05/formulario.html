@@ -1,141 +1,63 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Concurso "Chidos mis Tenis"</title>
-    <link rel="stylesheet" href="form.css">
+  <meta charset="utf-8">
+  <title>Registro al Concurso</title>
+  <style type="text/css">
+    ol, ul { list-style-type: none; }
+    body { font-family: Arial, sans-serif; background-color: #f2f2f2; margin: 40px; }
+    fieldset { background-color: white; border-radius: 10px; padding: 20px; }
+  </style>
 </head>
+
 <body>
-    <div class="container">
-        <form id="tennisContestForm" action="http://localhost/wike/concurso.php" method="POST">
-            <h1>Registro al Concurso "Chidos mis Tenis"</h1>
-            
-            <p>¿Quieres cambiar tus viejos tenis por un par personalizado de Tenis Mike®?</p>
-            <p>Justifica el por qué tus tenis se <em>tienen que</em> ir y tú puedes ser uno de los diez afortunados ganadores.</p>
-            
-            <h2>Información de Participación</h2>
-            
-            <div class="form-group">
-                <label for="name">Nombre:</label>
-                <input type="text" id="name" name="name" required>
-            </div>
-            
-            <div class="form-group">
-                <label for="email">Dirección de E-mail:</label>
-                <input type="email" id="email" name="email" required>
-            </div>
-            
-            <div class="form-group">
-                <label for="phone">Número Telefónico:</label>
-                <input type="tel" id="phone" name="phone" required>
-            </div>
-            
-            <div class="form-group">
-                <label for="story">Mis tenis son tan feos porque... (no más de 300 caracteres)</label>
-                <textarea id="story" name="story" maxlength="300" required></textarea>
-                <div class="character-count"><span id="charCount">0</span>/300 caracteres</div>
-            </div>
-            
-            <h2>Diseña tus Mike personalizados:</h2>
-            
-            <div class="form-group">
-                <p>Color (escoge uno):</p>
-                <div class="radio-group">
-                    <label><input type="radio" name="color" value="Rojo" required> Rojo</label>
-                    <label><input type="radio" name="color" value="Azul"> Azul</label>
-                    <label><input type="radio" name="color" value="Negro"> Negro</label>
-                    <label><input type="radio" name="color" value="Plateado"> Plateado</label>
-                </div>
-            </div>
-            
-            <div class="form-group">
-                <p>Características (escoge tantas como quieras):</p>
-                <div class="checkbox-group">
-                    <label><input type="checkbox" name="features" value="Cordones Brillantes"> Cordones Brillantes</label>
-                    <label><input type="checkbox" name="features" value="Logo Metálico"> Logo Metálico</label>
-                    <label><input type="checkbox" name="features" value="Suela Luminosa"> Suela Luminosa</label>
-                    <label><input type="checkbox" name="features" value="WiFi-integrado"> WiFi-integrado</label>
-                </div>
-            </div>
-            
-            <div class="form-group">
-                <label for="size">Talla (las medidas reflejan el estándar masculino):</label>
-                <select id="size" name="size" required>
-                    <option value="">Selecciona tu talla</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="9">9</option>
-                    <option value="10">10</option>
-                    <option value="11">11</option>
-                    <option value="12">12</option>
-                    <option value="13">13</option>
-                </select>
-            </div>
-            
-            <button type="submit">Enviar registro</button>
-        </form>
+  <h1>Registro al Concurso “Chidos mis Tenis”</h1>
 
-        <div id="confirmation" class="confirmation">
-            <h2>¡MUCHAS GRACIAS!</h2>
-            <p>Gracias por entrar al concurso de Tenis Mike® "Chidos mis Tenis". Hemos recibido la siguiente información de tu registro:</p>
-            
-            <div class="confirmation-details">
-                <p><strong>Acerca de ti:</strong></p>
-                <p><strong>Nombre:</strong> <span id="confirm-name"></span></p>
-                <p><strong>E-mail:</strong> <span id="confirm-email"></span></p>
-                <p><strong>Teléfono:</strong> <span id="confirm-phone"></span></p>
-                
-                <p><strong>Tu triste historia:</strong></p>
-                <p id="confirm-story"></p>
-                
-                <p><strong>Tu diseño de Tenis (si ganas)</strong></p>
-                <p><strong>Color:</strong> <span id="confirm-color"></span></p>
-                <p><strong>Tamaño:</strong> <span id="confirm-size"></span></p>
-            </div>
-        </div>
-    </div>
+  <p>¿Quieres cambiar tus viejos tenis por un par personalizado de Tenis Mike&#169;?<br><br>
+  Justifica el por qué tus tenis se <em>tienen que</em> ir y tú podrías ser uno de los diez afortunados ganadores.</p>
 
-    <script>
-        document.getElementById('tennisContestForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const phone = document.getElementById('phone').value;
-            const story = document.getElementById('story').value;
-            
+  <form id="formularioTenis" action="http://localhost/buap/tecweb/practicas/p05/concurso.php" method="post">
 
-            const color = document.querySelector('input[name="color"]:checked').value;
-            
-            const size = document.getElementById('size').value;
-    
-            document.getElementById('confirm-name').textContent = name;
-            document.getElementById('confirm-email').textContent = email;
-            document.getElementById('confirm-phone').textContent = phone;
-            document.getElementById('confirm-story').textContent = story;
-            document.getElementById('confirm-color').textContent = color;
-            document.getElementById('confirm-size').textContent = size;
-            
-            document.getElementById('tennisContestForm').style.display = 'none';
-            document.getElementById('confirmation').style.display = 'block';
-        });
-        
-        document.getElementById('story').addEventListener('input', function() {
-            const charCount = this.value.length;
-            document.getElementById('charCount').textContent = charCount;
-            
-            if (charCount > 300) {
-                this.value = this.value.substring(0, 300);
-                document.getElementById('charCount').textContent = 300;
-            }
-        });
-    </script>
+    <h2>Información Personal</h2>
+    <fieldset>
+      <ul>
+        <li><label for="form-name">Nombre:</label> <input type="text" name="name" id="form-name" required></li>
+        <li><label for="form-email">E-mail:</label> <input type="email" name="email" id="form-email" required></li>
+        <li><label for="form-tel">Teléfono:</label> <input type="tel" name="phone" id="form-tel"></li>
+        <li><label for="form-story">Mis tenis son tan feos porque...</label><br>
+            <textarea name="story" rows="4" cols="60" id="form-story" placeholder="No más de 300 caracteres"></textarea></li>
+      </ul>
+    </fieldset>
 
-    </div>
+    <h2>Diseña tus Tenis</h2>
+    <fieldset>
+      <legend>Color</legend>
+      <ul>
+        <li><label><input type="radio" name="color" value="rojo"> Rojo</label></li>
+        <li><label><input type="radio" name="color" value="azul" checked> Azul</label></li>
+        <li><label><input type="radio" name="color" value="negro"> Negro</label></li>
+        <li><label><input type="radio" name="color" value="plateado"> Plateado</label></li>
+      </ul>
+
+      <legend>Características</legend>
+      <ul>
+        <li><label><input type="checkbox" name="features[]" value="cordones"> Cordones Brillantes</label></li>
+        <li><label><input type="checkbox" name="features[]" value="logo"> Logo Metálico</label></li>
+        <li><label><input type="checkbox" name="features[]" value="suela"> Suela Luminosa</label></li>
+        <li><label><input type="checkbox" name="features[]" value="wifi"> WiFi Integrado</label></li>
+      </ul>
+
+      <legend>Talla</legend>
+      <select name="size">
+        <option>5</option><option>6</option><option>7</option>
+        <option>8</option><option>9</option><option>10</option>
+      </select>
+    </fieldset>
+
+    <p>
+      <input type="submit" value="¡Chidos mis Tenis!">
+      <input type="reset" value="Borrar">
+    </p>
+  </form>
 </body>
 </html>
