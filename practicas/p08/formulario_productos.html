@@ -7,43 +7,45 @@
 </head>
 <body class="container mt-5">
     <h3>Registro de Nuevo Producto</h3>
-    <form action="http://localhost/tecweb/practicas/p08/set_producto_v2.php" method="post">
+    <form action="set_producto_v2.php" method="post">
         <div class="form-group">
             <label>Nombre:</label>
-            <input type="text" name="nombre" class="form-control" required>
+            <input type="text" name="nombre" class="form-control" required value="Producto prueba">
         </div>
 
         <div class="form-group">
             <label>Marca:</label>
-            <input type="text" name="marca" class="form-control" required>
+            <input type="text" name="marca" class="form-control" required value="Marca prueba">
         </div>
 
         <div class="form-group">
             <label>Modelo:</label>
-            <input type="text" name="modelo" class="form-control" required>
+            <input type="text" name="modelo" class="form-control" required value="Modelo prueba">
         </div>
 
         <div class="form-group">
             <label>Precio:</label>
-            <input type="number" step="0.01" name="precio" class="form-control" required>
+            <input type="number" step="0.01" name="precio" class="form-control" required value="100.50">
         </div>
 
         <div class="form-group">
             <label>Unidades:</label>
-            <input type="number" name="unidades" class="form-control" required>
+            <input type="number" name="unidades" class="form-control" required value="5">
         </div>
 
         <div class="form-group">
             <label>Detalles:</label>
-            <textarea name="detalles" class="form-control" rows="3"></textarea>
+            <textarea name="detalles" class="form-control" rows="3">Detalles de prueba</textarea>
         </div>
 
         <div class="form-group">
             <label>Ruta de imagen:</label>
-            <input type="text" name="imagen" class="form-control" placeholder="img/nombre_imagen.jpg">
+            <input type="text" name="imagen" class="form-control" value="img/imagen.png" readonly>
+            <small class="form-text text-muted">Se usará automáticamente tu imagen.png</small>
         </div>
 
         <button type="submit" class="btn btn-primary">Registrar Producto</button>
+        <a href="get_productos_vigentes.php?tope=100" class="btn btn-secondary">Ver Productos</a>
     </form>
 </body>
 </html>
