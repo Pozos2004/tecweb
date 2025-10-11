@@ -1,11 +1,3 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>Actualización de Producto</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/>
-</head>
-<body class="container mt-4">
 <?php
 // update_producto.php
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
@@ -63,5 +55,3 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     echo '<div class="alert alert-info">No se recibieron datos para actualizar.</div>';
 }
 ?>
-</body>
-</html>
