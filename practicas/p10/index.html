@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Sistema de Productos - AJAX</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Tienda de Electrónicos - AJAX</h1>
+        
+        <!-- Formulario de Búsqueda -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h4> Buscar Productos</h4>
+            </div>
+            <div class="card-body">
+                <div class="form-group">
+                    <label>Buscar por nombre, marca o detalles:</label>
+                    <input type="text" id="searchTerm" class="form-control" placeholder="Ej: Samsung, laptop, gaming...">
+                </div>
+                <button onclick="buscarProducto()" class="btn btn-primary">Buscar Productos</button>
+                <button onclick="buscarID()" class="btn btn-secondary">Buscar por ID</button>
+            </div>
+        </div>
+
+        <!-- Formulario de Registro -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h4> Registrar Nuevo Producto</h4>
+            </div>
+            <div class="card-body">
+                <form id="productForm">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Nombre:</label>
+                                <input type="text" id="nombre" name="nombre" class="form-control" maxlength="100" required>
+                                <small class="form-text text-muted">Máximo 100 caracteres</small>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Marca:</label>
+                                <select id="marca" name="marca" class="form-control" required>
+                                    <option value="">Selecciona una marca</option>
+                                    <option value="Dell">Dell</option>
+                                    <option value="Samsung">Samsung</option>
+                                    <option value="Logitech">Logitech</option>
+                                    <option value="LG">LG</option>
+                                    <option value="HP">HP</option>
+                                    <option value="Asus">Asus</option>
+                                    <option value="JBL">JBL</option>
+                                    <option value="Hisense">Hisense</option>
+                                    <option value="Xiaomi">Xiaomi</option>
+                                    <option value="Amazfit">Amazfit</option>
+                                    <option value="Otra">Otra</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Modelo:</label>
+                                <input type="text" id="modelo" name="modelo" class="form-control" maxlength="25" required>
+                                <small class="form-text text-muted">Máximo 25 caracteres alfanuméricos</small>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Precio ($):</label>
+                                <input type="number" step="0.01" id="precio" name="precio" class="form-control" min="100" required>
+                                <small class="form-text text-muted">Debe ser mayor a $99.99</small>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Unidades:</label>
+                                <input type="number" id="unidades" name="unidades" class="form-control" min="0" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Detalles:</label>
+                                <textarea id="detalles" name="detalles" class="form-control" rows="2" maxlength="250"></textarea>
+                                <small class="form-text text-muted">Máximo 250 caracteres</small>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Imagen:</label>
+                                <input type="text" id="imagen" name="imagen" class="form-control" placeholder="img/nombre_imagen.jpg">
+                                <small class="form-text text-muted">Opcional - Se usará imagen por defecto si está vacío</small>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button type="button" onclick="crearProducto()" class="btn btn-success">Registrar Producto</button>
+                    <button type="reset" class="btn btn-secondary">Limpiar Formulario</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Resultados de Búsqueda -->
+        <div class="card">
+            <div class="card-header">
+                <h4>Resultados</h4>
+            </div>
+            <div class="card-body">
+                <div id="results"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
