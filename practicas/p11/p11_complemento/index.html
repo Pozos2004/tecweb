@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>ProductApp</title>
+    <!-- BOOTSTRAP 4  -->
+    <link rel="stylesheet" href="https://bootswatch.com/4/superhero/bootstrap.min.css">
+    <style>
+        .validation-status {
+            font-size: 0.8rem;
+            margin-top: 0.25rem;
+            display: none;
+        }
+        .status-valid {
+            color: #28a745;
+        }
+        .status-invalid {
+            color: #dc3545;
+        }
+        .status-checking {
+            color: #ffc107;
+        }
+        .form-group {
+            position: relative;
+        }
+        .cursor-pointer {
+            cursor: pointer;
+        }
+    </style>
+  </head>
+  <body>
+
+    <!-- BARRA DE NAVEGACIÓN  -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <a class="navbar-brand" href=".">ProductApp</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto"></ul>
+          <form class="form-inline my-2 my-lg-0" id="search-form">
+            <input class="form-control mr-sm-2" name="search" id="search" type="search" placeholder="ID, marca o descripción" aria-label="Search">
+            <button class="btn btn-success my-2 my-sm-0" type="submit">Buscar</button>
+          </form>
+      </div>
+    </nav>
+
+    <div class="container">
+      <div class="row p-4">
+        <div class="col-md-5">
+          <div class="card">
+            <div class="card-body">
+              <!-- FORMULARIO PARA AGREGAR/EDITAR PRODUCTO -->
+              <form id="product-form">
+                <div class="form-group">
+                  <label for="name">Nombre del Producto</label>
+                  <input class="form-control" type="text" id="name" name="name" placeholder="Nombre de producto" required>
+                  <div class="validation-status" id="name-status"></div>
+                </div>
+                
+                <div class="form-group">
+                  <label for="precio">Precio</label>
+                  <input class="form-control" type="number" id="precio" name="precio" step="0.01" min="0" placeholder="0.00" required>
+                  <div class="validation-status" id="precio-status"></div>
+                </div>
+                
+                <div class="form-group">
+                  <label for="unidades">Unidades</label>
+                  <input class="form-control" type="number" id="unidades" name="unidades" min="0" placeholder="1" required>
+                  <div class="validation-status" id="unidades-status"></div>
+                </div>
+                
+                <div class="form-group">
+                  <label for="modelo">Modelo</label>
+                  <input class="form-control" type="text" id="modelo" name="modelo" placeholder="XX-000" required>
+                  <div class="validation-status" id="modelo-status"></div>
+                </div>
+                
+                <div class="form-group">
+                  <label for="marca">Marca</label>
+                  <input class="form-control" type="text" id="marca" name="marca" placeholder="NA" required>
+                  <div class="validation-status" id="marca-status"></div>
+                </div>
+                
+                <div class="form-group">
+                  <label for="detalles">Detalles</label>
+                  <textarea class="form-control" id="detalles" name="detalles" rows="3" placeholder="NA" required></textarea>
+                  <div class="validation-status" id="detalles-status"></div>
+                </div>
+                
+                <div class="form-group">
+                  <label for="imagen">Imagen</label>
+                  <input class="form-control" type="text" id="imagen" name="imagen" placeholder="img/default.png" required>
+                  <div class="validation-status" id="imagen-status"></div>
+                </div>
+                
+                <input type="hidden" id="productId">
+                <button class="btn btn-primary btn-block text-center" type="submit" id="btn-submit">
+                  Agregar Producto
+                </button>
+                <button class="btn btn-warning btn-block text-center d-none" type="button" id="btn-cancel">
+                  Cancelar Edición
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <!-- TABLA  -->
+        <div class="col-md-7">
+          <div class="card my-4 d-none" id="product-result">
+            <div class="card-body">
+              <!-- RESULTADO -->
+              <ul id="container"></ul>
+            </div>
+          </div>
+
+          <table class="table table-bordered table-sm">
+            <thead>
+              <tr>
+                <td>Id</td>
+                <td>Nombre</td>
+                <td>Descripción</td>
+                <td>Acciones</td>
+              </tr>
+            </thead>
+            <tbody id="products"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Lógica del Frontend -->
+    <script src="app.js"></script>
+  </body>
+</html>
