@@ -1,0 +1,17 @@
+{
+    "name": "tecweb/myapi",
+    "description": "API para gestión de productos",
+    "type": "library",
+    "autoload": {
+        "psr-4": {
+            "TECWEB\\MYAPI\\": "src/TECWEB/MYAPI/"
+        }
+    },
+    "authors": [
+        {
+            "name": "José Eduardo Pozos Zecua",
+            "email": "lalitopozosz@gmail.com"
+        }
+    ],
+    "require": {}
+}
