@@ -2,19 +2,39 @@
 <html>
 <head>
     <title>Prueba POST Slim API</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        .form-container { margin: 20px 0; padding: 15px; border: 1px solid #ccc; }
+        button { padding: 10px 15px; margin: 5px; background: #007bff; color: white; border: none; cursor: pointer; }
+        button:hover { background: #0056b3; }
+    </style>
 </head>
 <body>
-    <h2>Prueba POST /pruebapost</h2>
-    <form action="http://localhost/tecweb/practicas/p13/pruebapost" method="post">
-        <input type="text" name="nombre" value="Ana" placeholder="Tu nombre">
-        <button type="submit">Enviar POST</button>
-    </form>
+    <h1>Formulario para la carpeta p13</h1>
 
-    <h2>Prueba POST /testjson</h2>
-    <form action="http://localhost/tecweb/practicas/p13/testjson" method="post">
-        <input type="text" name="producto" value="Laptop" placeholder="Producto">
-        <input type="number" name="precio" value="5000" placeholder="Precio">
-        <button type="submit">Enviar JSON</button>
-    </form>
+    <div class="form-container">
+        <h2>1. GET /hola?nombre=XXX</h2>
+        <form action="/tecweb/practicas/p13/hola" method="get">
+            <input type="text" name="nombre" value="Maria" placeholder="Tu nombre">
+            <button type="submit">Probar GET /hola</button>
+        </form>
+    </div>
+
+    <div class="form-container">
+        <h2>2. POST /pruebapost</h2>
+        <form action="/tecweb/practicas/p13/pruebapost" method="post">
+            <input type="text" name="nombre" value="Ana" placeholder="Tu nombre">
+            <button type="submit">Probar POST /pruebapost</button>
+        </form>
+    </div>
+
+    <div class="form-container">
+        <h2>3. POST /testjson</h2>
+        <form action="/tecweb/practicas/p13/testjson" method="post">
+            <input type="text" name="producto" value="Laptop" placeholder="Producto">
+            <input type="number" name="precio" value="5000" placeholder="Precio">
+            <button type="submit">Probar POST /testjson</button>
+        </form>
+    </div>
 </body>
 </html>
