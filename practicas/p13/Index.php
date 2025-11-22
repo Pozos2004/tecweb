@@ -8,20 +8,20 @@ require 'vendor/autoload.php';
 $app = AppFactory::create();
 $app->setBasePath("/tecweb/practicas/p13");
 
-// 1. MÉTODO GET en /
+// 1. MÉTODO GET en / - YA FUNCIONA
 $app->get('/', function (Request $request, Response $response, $args) {
     $response->getBody()->write("Hola Mundo desde Slim PHP!");
     return $response;
 });
 
-// 2. MÉTODO GET en /hola/{nombre}
-$app->get('/hola/{nombre}', function (Request $request, Response $response, $args) {
-    $nombre = $args['nombre'];
+// 2. MÉTODO GET en /hola - MODIFICADO (sin {nombre})
+$app->get('/hola', function (Request $request, Response $response, $args) {
+    $nombre = $request->getQueryParams()['nombre'] ?? 'Invitado';
     $response->getBody()->write("Hola, $nombre!");
     return $response;
 });
 
-// 3. MÉTODO POST en /pruebapost
+// 3. MÉTODO POST en /pruebapost - IGUAL
 $app->post('/pruebapost', function (Request $request, Response $response, $args) {
     $data = $request->getParsedBody();
     $nombre = $data['nombre'] ?? 'Invitado';
@@ -29,7 +29,7 @@ $app->post('/pruebapost', function (Request $request, Response $response, $args)
     return $response;
 });
 
-// 4. MÉTODO POST en /testjson
+// 4. MÉTODO POST en /testjson - IGUAL
 $app->post('/testjson', function (Request $request, Response $response, $args) {
     $data = $request->getParsedBody();
     
@@ -39,7 +39,7 @@ $app->post('/testjson', function (Request $request, Response $response, $args) {
         'data' => $data
     ];
     
-    $response->getBody()->write(json_encode($responseData));
+    $response->getBody()->write(json_encode($responseData, JSON_PRETTY_PRINT));
     return $response->withHeader('Content-Type', 'application/json');
 });
 
