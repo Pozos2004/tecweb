@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>ProductApp</title>
+    <!-- BOOTSTRAP 4  -->
+    <link rel="stylesheet" href="https://bootswatch.com/4/superhero/bootstrap.min.css">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+
+    <!-- BARRA DE NAVEGACIÓN  -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <a class="navbar-brand" href=".">ProductApp</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto">
+
+          <!-- 🔵 ESTE ES EL ÚNICO CÓDIGO QUE SE AGREGA -->
+          <li class="nav-item">
+            <a class="btn btn-sm btn-outline-light ml-2" href="estadisticas.html">Estadísticas</a>
+          </li>
+          <!-- 🔵 FIN DE LO AGREGADO -->
+
+        </ul>
+
+          <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" name="search" id="search" type="search" placeholder="ID, marca o descripción" aria-label="Search">
+            <button class="btn btn-success my-2 my-sm-0" type="submit">Buscar</button>
+          </form>
+      </div>
+    </nav>
+
+    <div class="container">
+      <div class="row p-4">
+        <div class="col-md-5">
+          <div class="card">
+            <div class="card-body">
+              <!-- FORMULARIO PARA AGREGAR PRODUCTO -->
+              <form id="product-form">
+                <div class="form-group">
+                  <input class="form-control" type="text" id="name" placeholder="Nombre de producto">
+                </div>
+                <div class="form-group">
+                <label>Marca</label>
+                <select class="form-control" id="marca" required>
+                  <option value="">Seleccione una marca...</option>
+                  <option value="Sony">Sony</option>
+                  <option value="Samsung">Samsung</option>
+                  <option value="LG">LG</option>
+                  <option value="HP">HP</option>
+                  <option value="Dell">Dell</option>
+                  <option value="Apple">Apple</option>
+                  <option value="Motorola">Motorola</option>
+                  <option value="Asus">Asus</option>
+                  <option value="Xiaomi">Xiaomi</option>
+                  <option value="Amazon">Amamzon</option>
+                  <option value="Lenovo">Lenovo</option>
+                  <option value="ZTE">ZTE</option>
+                  <option value="Nintendo">Nintendo</option>
+                  <option value="Playstation">Playstation</option>
+                  <option value="Xbox">Xbox</option>
+                  <option value="Nokia">Nokia</option>
+                  <option value="Oppo">Oppo</option>
+                  <option value="Google">Google</option>
+                  <option value="Toshiba">Toshiba</option>
+                  <option value=""></option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Modelo</label>
+                <input class="form-control" type="text" id="modelo" placeholder="Modelo">
+              </div>
+
+              <div class="form-group">
+                <label>Precio</label>
+                <input class="form-control" type="number" id="precio" step="0.01" placeholder="Precio">
+              </div>
+
+              <div class="form-group">
+                <label>Detalles (opcional)</label>
+                <input class="form-control" type="text" id="detalles" placeholder="Detalles del producto">
+              </div>
+
+              <div class="form-group">
+                <label>Unidades</label>
+                <input class="form-control" type="number" id="unidades" placeholder="Unidades en almacén">
+              </div>
+
+              <div class="form-group">
+                <label>Imagen (opcional)</label>
+                <input class="form-control" type="text" id="imagen" placeholder="Ruta de la imagen">
+              </div>
+                <input type="hidden" id="productId">
+                <button class="btn btn-primary btn-block text-center" type="submit">
+                  Agregar Producto
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <!-- TABLA  -->
+        <div class="col-md-7">
+          <div class="card my-4" id="product-result">
+            <div class="card-body">
+              <!-- RESULTADO -->
+              <ul id="container"></ul>
+            </div>
+          </div>
+
+          <table class="table table-bordered table-sm">
+            <thead>
+              <tr>
+                <td>Id</td>
+                <td>Nombre</td>
+                <td>Descripción</td>
+              </tr>
+            </thead>
+            <tbody id="products"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+      crossorigin="anonymous"></script>
+    <!-- Lógica del Frontend -->
+    <script src="admin.js"></script>
+  </body>
+
+</html>

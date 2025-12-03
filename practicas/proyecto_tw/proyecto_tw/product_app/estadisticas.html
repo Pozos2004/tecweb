@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Estadísticas de descargas | ProductApp</title>
+  <link rel="stylesheet" href="https://bootswatch.com/4/superhero/bootstrap.min.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="admin.html">ProductApp - Admin</a>
+  <a class="btn btn-sm btn-outline-light ml-2" href="estadisticas.html">Estadísticas</a>
+</nav>
+
+<div class="container mt-4">
+  <h3>Estadísticas de descargas</h3>
+
+  <div class="row">
+    <div class="col-md-6">
+      <h5>Descargas por día de la semana</h5>
+      <canvas id="chartDiaSemana"></canvas>
+    </div>
+    <div class="col-md-6">
+      <h5>Descargas por hora del día</h5>
+      <canvas id="chartHora"></canvas>
+    </div>
+  </div>
+
+  <div class="row mt-4">
+    <div class="col-md-6">
+      <h5>Descargas por marca (tipo de recurso)</h5>
+      <canvas id="chartMarca"></canvas>
+    </div>
+  </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="estadisticas.js"></script>
+</body>
+</html>
