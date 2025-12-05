@@ -22,10 +22,6 @@ h3, h4, h5 {
   letter-spacing: 0.03em;
 }
 
-/* =========================
-   NAVBAR
-   ========================= */
-
 .navbar {
   box-shadow: 0 8px 22px rgba(0, 0, 0, 0.65);
   border-bottom: 1px solid rgba(148, 163, 184, 0.2);
@@ -43,7 +39,7 @@ h3, h4, h5 {
   color: #22c55e;
 }
 
-/* Botones en la navbar */
+/* Botones de navbar */
 .navbar .btn {
   border-radius: 999px;
   padding: 0.28rem 0.9rem;
@@ -51,9 +47,7 @@ h3, h4, h5 {
   font-weight: 500;
 }
 
-/* =========================
-   BOTONES
-   ========================= */
+/* BOTONES */
 
 .btn {
   border-radius: 999px;
@@ -88,9 +82,7 @@ h3, h4, h5 {
   transform: translateY(-1px);
 }
 
-/* =========================
-   TÍTULOS DE SECCIÓN
-   ========================= */
+/* TÍTULOS DE SECCIÓN */
 
 .page-title {
   font-weight: 800;
@@ -110,9 +102,7 @@ h3, h4, h5 {
   margin-bottom: 0.8rem;
 }
 
-/* =========================
-   TARJETAS GENERALES
-   ========================= */
+/* TARJETAS GENERALES */
 
 .card {
   border-radius: 16px;
@@ -136,9 +126,7 @@ h3, h4, h5 {
   padding: 1.2rem 1.3rem;
 }
 
-/* =========================
-   CATÁLOGO PÚBLICO (index)
-   ========================= */
+/* CATÁLOGO PÚBLICO (index) */
 
 #listaRecursos .card-img-top {
   border-bottom: 1px solid rgba(148, 163, 184, 0.35);
@@ -167,9 +155,7 @@ h3, h4, h5 {
   font-size: 0.8rem;
 }
 
-/* =========================
-   PANTALLAS DE AUTH (login/signup)
-   ========================= */
+/* PANTALLAS DE AUTH (login/signup) */
 
 .auth-wrapper {
   min-height: calc(100vh - 64px);
@@ -214,9 +200,7 @@ h3, h4, h5 {
   min-height: 1.4rem;
 }
 
-/* =========================
-   ADMIN (formulario + tabla)
-   ========================= */
+/* ADMIN (formulario + tabla) */
 
 #product-form .form-group label {
   font-size: 0.82rem;
@@ -267,9 +251,7 @@ table.table tbody tr td {
   font-size: 0.85rem;
 }
 
-/* =========================
-   ESTADÍSTICAS (gráficas)
-   ========================= */
+/* ESTADÍSTICAS (gráficas) */
 
 .stats-header {
   display: flex;
@@ -301,9 +283,7 @@ table.table tbody tr td {
   max-height: 320px;
 }
 
-/* =========================
-   UTILIDADES PEQUEÑAS
-   ========================= */
+/* UTILIDADES PEQUEÑAS */
 
 .text-muted-soft {
   color: rgba(148, 163, 184, 0.9);
