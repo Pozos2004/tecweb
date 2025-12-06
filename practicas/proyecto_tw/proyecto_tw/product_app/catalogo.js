@@ -1,52 +1,51 @@
+// catalogo.js
 $(function () {
 
   function cargar() {
     $.get('./backend/product-list.php', function (resp) {
-      try {
-        let productos = JSON.parse(resp);
-        let html = '';
+      let recursos = (typeof resp === 'string') ? JSON.parse(resp) : resp;
+      let html = '';
 
-        productos.forEach(p => {
-          html += `
-            <div class="col-md-4 mb-3">
-              <div class="card h-100">
-                <img src="${p.imagen}" class="card-img-top" style="height:160px;object-fit:cover" alt="">
-                <div class="card-body">
-                  <h5>${p.nombre}</h5>
-                  <p class="mb-1">Marca: ${p.marca}</p>
-                  <p class="mb-1">Modelo: ${p.modelo}</p>
-                  <p class="mb-1">Precio: $${p.precio}</p>
-                  <a href="#" class="btn btn-primary descargar" data-id="${p.id}">Descargar</a>
-                </div>
+      recursos.forEach(r => {
+        html += `
+          <div class="col-md-4 mb-3">
+            <div class="card recurso-card h-100">
+              <div class="card-body d-flex flex-column">
+                <h5 class="card-title">${r.titulo}</h5>
+                <p><strong>Lenguaje:</strong> ${r.lenguaje}</p>
+                <p><strong>Tipo:</strong> ${r.tipo_recurso}</p>
+
+                <button class="btn btn-warning mt-auto descargar"
+                        data-id="${r.id}">
+                  Descargar
+                </button>
               </div>
             </div>
-          `;
-        });
+          </div>
+        `;
+      });
 
-        $('#listaRecursos').html(html);
-      } catch (e) {
-        console.error('Respuesta no JSON', resp);
-        $('#listaRecursos').html('<div class="col-12">Error al cargar productos.</div>');
-      }
+      $('#listaRecursos').html(html);
     });
   }
 
   cargar();
 
-  $(document).on('click', '.descargar', function (e) {
+  //  DESCARGA REAL SIN AJAX
+  $(document).on('click', '.descargar', function () {
+    const id = $(this).data('id');
+
+    // Redirige al backend -> descarga real
+    window.location.href = "./backend/product-download.php?id=" + id;
+  });
+
+});
+
+// DESCARGA DIRECTA REAL
+$(document).on('click', '.descargar', function (e) {
     e.preventDefault();
     const id = $(this).data('id');
 
-    $.post('./backend/product-download.php', { producto_id: id }, function (resp) {
-      console.log('Respuesta descarga:', resp);
-      try {
-        let r = (typeof resp === 'string') ? JSON.parse(resp) : resp;
-        alert(r.message);
-      } catch (e) {
-        console.error('Error parseando JSON', resp);
-        alert('Error al registrar descarga');
-      }
-    });
-  });
-
+    // Abrimos la URL que genera la descarga
+    window.location.href = './backend/product-download.php?id=' + id;
 });
