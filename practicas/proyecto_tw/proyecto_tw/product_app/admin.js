@@ -1,288 +1,161 @@
-$(document).ready(function(){
-    let edit = false;
+// admin.js
+$(function () {
 
-    // JSON BASE A MOSTRAR EN FORMULARIO
-    var baseJSON = {
-        "precio": 0.0,
-        "unidades": 1,
-        "modelo": "XX-000",
-        "marca": "NA",
-        "detalles": "NA",
-        "imagen": "img/default.png"
-    };
+  let listaRecursos = [];
 
-    let JsonString = JSON.stringify(baseJSON,null,2);
-    $('#description').val(JsonString);
-    $('#product-result').hide();
-    listarProductos();
+  // ================================
+  // Cargar recursos de backend
+  // ================================
+  function cargarArchivos() {
+    $.get('./backend/product-list.php', function (resp) {
+      try {
+        listaRecursos = (typeof resp === 'string') ? JSON.parse(resp) : resp;
+      } catch (e) {
+        console.error("Error parseando:", resp);
+        listaRecursos = [];
+      }
 
-    //VALIDACIONES
-    function validarNombre() {
-    const nombre = $('#name').val().trim();
-    return (nombre !== '' && nombre.length <= 100);
+      const f = $('#search').val();
+      renderTabla(f);
+    });
+  }
+
+  // ================================
+  // Pintar tabla con búsqueda
+  // ================================
+  function renderTabla(filtro) {
+    const term = (filtro || "").toLowerCase();
+    let html = "";
+
+    const filtrados = listaRecursos.filter(r => {
+      if (!term) return true;
+      return (
+        String(r.id).includes(term) ||
+        (r.titulo || "").toLowerCase().includes(term) ||
+        (r.descripcion || "").toLowerCase().includes(term) ||
+        (r.lenguaje || "").toLowerCase().includes(term) ||
+        (r.tipo_recurso || "").toLowerCase().includes(term)
+      );
+    });
+
+    filtrados.forEach(r => {
+      html += `
+        <tr>
+          <td>${r.id}</td>
+
+          <!-- 👇 TÍTULO EDITABLE (link) -->
+          <td><a href="#" class="link-editar" data-id="${r.id}">${r.titulo}</a></td>
+
+          <td>${r.lenguaje || ''}</td>
+          <td>${r.tipo_recurso || ''}</td>
+          <td>${r.tipo_archivo || ''}</td>
+
+          <td>
+            <button class="btn btn-sm btn-danger eliminar" data-id="${r.id}">
+              Eliminar
+            </button>
+          </td>
+        </tr>
+      `;
+    });
+
+    if (html === "") {
+      html = `<tr><td colspan="6">No hay resultados</td></tr>`;
     }
 
-    function validarMarca() {
-    return ($('#marca').val() !== '');
-    }
+    $("#products").html(html);
+  }
 
-    function validarModelo() {
-    const modelo = $('#modelo').val().trim();
-    return /^[A-Za-z0-9\-]{1,25}$/.test(modelo);
-    }
+  // ================================
+  // Buscador en vivo
+  // ================================
+  $("#search").on("keyup", function () {
+    renderTabla($(this).val());
+  });
 
-    function validarPrecio() {
-    return ($('#precio').val() !== '' && parseFloat($('#precio').val()) > 99.99);
-    }
+  // ================================
+  // Guardar recurso (nuevo / editar)
+  // ================================
+  $("#product-form").on("submit", function (e) {
+    e.preventDefault();
 
-    function validarDetalles() {
-    const detalles = $('#detalles').val().trim();
-    return (detalles.length <= 250);
-    }
+    let form = document.getElementById("product-form");
+    let fd = new FormData(form);
 
-    function validarUnidades() {
-    return ($('#unidades').val() !== '' && parseInt($('#unidades').val()) >= 0);
-    }
+    $.ajax({
+      url: "./backend/product-add.php",
+      method: "POST",
+      data: fd,
+      processData: false,
+      contentType: false,
 
-    function validarImagen() {
-    return true; 
-    }
+      success: function (resp) {
+        let r;
+        try {
+          r = JSON.parse(resp);
+        } catch {
+          $("#msg-recurso").text("Error en servidor");
+          return;
+        }
 
-    function mostrarEstado(valido, ok, error) {
-    $('#product-result').show();
-    $('#container').html(`<li>${valido ? ok : error}</li>`);
-    }
+        $("#msg-recurso").text(r.message);
 
-    $('#name').focus(() => mostrarEstado(validarNombre(), 'Nombre válido', 'Nombre incorrecto (requerido, máx 100 caracteres)'));
-    $('#marca').focus(() => mostrarEstado(validarMarca(), 'Marca seleccionada', 'Debe seleccionar una marca'));
-    $('#modelo').focus(() => mostrarEstado(validarModelo(), 'Modelo válido', 'Modelo alfanumérico, máx 25 caracteres'));
-    $('#precio').focus(() => mostrarEstado(validarPrecio(), 'Precio válido', 'Debe ser mayor a 99.99'));
-    $('#detalles').focus(() => mostrarEstado(validarDetalles(), 'Detalles válidos', 'Máx 250 caracteres'));
-    $('#unidades').focus(() => mostrarEstado(validarUnidades(), 'Cantidad válida', 'Debe ser número ≥ 0'));
+        if (r.status === "success") {
+          form.reset();
+          $("#productId").val("");
+          cargarArchivos();
+        }
+      }
+    });
+  });
 
-    function listarProductos() {
-        $.ajax({
-            url: './backend/product-list.php',
-            type: 'GET',
-            success: function(response) {
-                console.log('Respuesta del servidor:', response);
-                // SE OBTIENE EL OBJETO DE DATOS A PARTIR DE UN STRING JSON
-                const productos = JSON.parse(response);
-            
-                // SE VERIFICA SI EL OBJETO JSON TIENE DATOS
-                if(Object.keys(productos).length > 0) {
-                    // SE CREA UNA PLANTILLA PARA CREAR LAS FILAS A INSERTAR EN EL DOCUMENTO HTML
-                    let template = '';
+  // ================================
+  // EDITAR haciendo clic en el TÍTULO
+  // ================================
+  $(document).on("click", ".link-editar", function (e) {
+    e.preventDefault();
+    const id = $(this).data("id");
 
-                    productos.forEach(producto => {
-                        // SE CREA UNA LISTA HTML CON LA DESCRIPCIÓN DEL PRODUCTO
-                        let descripcion = '';
-                        descripcion += '<li>precio: '+producto.precio+'</li>';
-                        descripcion += '<li>unidades: '+producto.unidades+'</li>';
-                        descripcion += '<li>modelo: '+producto.modelo+'</li>';
-                        descripcion += '<li>marca: '+producto.marca+'</li>';
-                        descripcion += '<li>detalles: '+producto.detalles+'</li>';
-                    
-                        template += `
-                            <tr productId="${producto.id}">
-                                <td>${producto.id}</td>
-                                <td><a href="#" class="product-item">${producto.nombre}</a></td>
-                                <td><ul>${descripcion}</ul></td>
-                                <td>
-                                    <button class="product-delete btn btn-danger">
-                                        Eliminar
-                                    </button>
-                                </td>
-                            </tr>
-                        `;
-                    });
-                    // SE INSERTA LA PLANTILLA EN EL ELEMENTO CON ID "productos"
-                    $('#products').html(template);
-                }
-            }
-        });
-}
+    const r = listaRecursos.find(x => x.id == id);
+    if (!r) return;
 
-$('#search').keyup(function() {
+    $("#productId").val(r.id);
+    $("#titulo").val(r.titulo);
+    $("#descripcion").val(r.descripcion);
+    $("#lenguaje").val(r.lenguaje);
+    $("#tipo_recurso").val(r.tipo_recurso);
 
-    if ($('#search').val()) {
+    $("#msg-recurso").text("Editando recurso ID " + r.id);
 
-        let search = $('#search').val();
+    $("html, body").animate({
+      scrollTop: $("#product-form").offset().top - 80
+    }, 400);
+  });
 
-        $.ajax({
-            url: './backend/product-search.php?name=' + encodeURIComponent(search),
-            type: 'POST',
-            data: { name: search },
-            success: function(response) {
+  // ================================
+  // ELIMINAR
+  // ================================
+  $(document).on("click", ".eliminar", function () {
+    const id = $(this).data("id");
 
-                let productos = JSON.parse(response);
+    if (!confirm("¿Eliminar recurso?")) return;
 
-                // normalizar a array
-                if (!Array.isArray(productos)) {
-                    productos = [productos];
-                }
-
-                if (productos.length > 0) {
-
-                    let template = '';
-                    let template_bar = '';
-
-                    productos.forEach(producto => {
-
-                        let descripcion = `
-                            <li>precio: ${producto.precio}</li>
-                            <li>unidades: ${producto.unidades}</li>
-                            <li>modelo: ${producto.modelo}</li>
-                            <li>marca: ${producto.marca}</li>
-                            <li>detalles: ${producto.detalles}</li>
-                        `;
-
-                        template += `
-                            <tr productId="${producto.id}">
-                                <td>${producto.id}</td>
-                                <td><a href="#" class="product-item">${producto.nombre}</a></td>
-                                <td><ul>${descripcion}</ul></td>
-                                <td>
-                                    <button class="product-delete btn btn-danger">Eliminar</button>
-                                </td>
-                            </tr>
-                        `;
-
-                        template_bar += `<li>${producto.nombre}</li>`;
-                    });
-
-                    $('#product-result').show();
-                    $('#container').html(template_bar);
-                    $('#products').html(template);
-                }
-            }
-        });
-
-    } else {
-        $('#product-result').hide();
-    }
-});
-
-    $('#product-form').submit(e => {
-        $('button.btn-primary').text("Agregar Producto");
-        e.preventDefault();
-
-        // SE CONVIERTE EL JSON DE STRING A OBJETO
-        let postData = {
-        nombre: $('#name').val(),
-        marca: $('#marca').val(),
-        modelo: $('#modelo').val(),
-        precio: parseFloat($('#precio').val()),
-        detalles: $('#detalles').val(),
-        unidades: parseInt($('#unidades').val()),
-        imagen: ($('#imagen').val() === '' ? 'img/default.png' : $('#imagen').val()),
-        id: $('#productId').val()
-        };
-
-        /**
-         * AQUÍ DEBES AGREGAR LAS VALIDACIONES DE LOS DATOS EN EL JSON
-         * --> EN CASO DE NO HABER ERRORES, SE ENVIAR EL PRODUCTO A AGREGAR
-         **/
-
-        const url = edit === false ? './backend/product-add.php' : './backend/product-edit.php';
-        
-        if(!(validarNombre() && validarMarca() && validarModelo() && validarPrecio() &&
-        validarDetalles() && validarUnidades())) {
-        mostrarEstado(false, '', 'Corrige los campos marcados antes de continuar');
+    $.post("./backend/product-delete.php", { id }, function (resp) {
+      let r;
+      try {
+        r = JSON.parse(resp);
+      } catch {
+        alert("Error en servidor");
         return;
-        }
+      }
 
-        $.post(url, postData, (response) => {
-            //console.log(response);
-            // SE OBTIENE EL OBJETO DE DATOS A PARTIR DE UN STRING JSON
-            let respuesta = JSON.parse(response);
-            // SE CREA UNA PLANTILLA PARA CREAR INFORMACIÓN DE LA BARRA DE ESTADO
-            let template_bar = '';
-            template_bar += `
-                        <li style="list-style: none;">status: ${respuesta.status}</li>
-                        <li style="list-style: none;">message: ${respuesta.message}</li>
-                    `;
-            // SE REINICIA EL FORMULARIO
-            $('#product-form')[0].reset();
-            $('#productId').val('');
-            $('#description').val(JsonString);
-            $('button.btn-primary').text("Agregar Producto");
+      alert(r.message);
 
-            $('#product-result').show();
-            // SE INSERTA LA PLANTILLA PARA LA BARRA DE ESTADO
-            $('#container').html(template_bar);
-            // SE LISTAN TODOS LOS PRODUCTOS
-            listarProductos();
-            // SE REGRESA LA BANDERA DE EDICIÓN A false
-            edit = false;
-        });
+      if (r.status === "success") cargarArchivos();
     });
+  });
 
-    $(document).on('click', '.product-delete', (e) => {
-        if(confirm('¿Realmente deseas eliminar el producto?')) {
-            const element = $(this)[0].activeElement.parentElement.parentElement;
-            const id = $(element).attr('productId');
-            $.post('./backend/product-delete.php', {id}, (response) => {
-            let respuesta = JSON.parse(response);
-            // SE CREA UNA PLANTILLA PARA CREAR INFORMACIÓN DE LA BARRA DE ESTADO
-            let template_bar = '';
-            template_bar += `
-                        <li style="list-style: none;">status: ${respuesta.status}</li>
-                        <li style="list-style: none;">message: ${respuesta.message}</li>
-                    `;
-            // SE REINICIA EL FORMULARIO
-            $('#product-form')[0].reset();
-            $('#productId').val('');
-            $('#description').val(JsonString);
-            $('button.btn-primary').text("Agregar Producto");
+  // Carga inicial
+  cargarArchivos();
 
-            $('#product-result').show();
-            // SE INSERTA LA PLANTILLA PARA LA BARRA DE ESTADO
-            $('#container').html(template_bar);
-            // SE LISTAN TODOS LOS PRODUCTOS
-            listarProductos();
-            // SE REGRESA LA BANDERA DE EDICIÓN A false
-            edit = false;
-            });
-        }
-    });
-
-    $(document).on('click', '.product-item', (e) => {
-        e.preventDefault();
-        $('button.btn-primary').text("Modificar Producto");
-        const element = $(this)[0].activeElement.parentElement.parentElement;
-        const id = $(element).attr('productId');
-        $.post('./backend/product-single.php', {id}, (response) => {
-            // SE CONVIERTE A OBJETO EL JSON OBTENIDO
-            let product = JSON.parse(response);
-            if (Array.isArray(product)) {
-                product = product[0];
-            }
-            // SE INSERTAN LOS DATOS ESPECIALES EN LOS CAMPOS CORRESPONDIENTES
-            $('#name').val(product.nombre);
-            // EL ID SE INSERTA EN UN CAMPO OCULTO PARA USARLO DESPUÉS PARA LA ACTUALIZACIÓN
-            $('#productId').val(product.id);
-            $('#marca').val(product.marca);
-            $('#modelo').val(product.modelo);
-            $('#precio').val(product.precio);
-            $('#detalles').val(product.detalles);
-            $('#unidades').val(product.unidades);
-            $('#imagen').val(product.imagen); 
-            $('#productId').val(product.id);
-            // SE ELIMINA nombre, eliminado E id PARA PODER MOSTRAR EL JSON EN EL <textarea>
-            let mostrarJSON = {...product};
-            delete(mostrarJSON.eliminado);
-            delete(mostrarJSON.id);
-            delete(mostrarJSON.nombre);
-
-            // SE CONVIERTE EL OBJETO JSON EN STRING
-            let JsonString = JSON.stringify(product,null,2);
-            // SE MUESTRA STRING EN EL <textarea>
-            $('#description').val(JsonString);
-            
-            // SE PONE LA BANDERA DE EDICIÓN EN true
-            edit = true;
-        });
-        e.preventDefault();
-    });    
 });
