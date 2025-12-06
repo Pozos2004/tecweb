@@ -1,136 +1,134 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <title>ProductApp</title>
-    <!-- BOOTSTRAP 4  -->
-    <link rel="stylesheet" href="https://bootswatch.com/4/superhero/bootstrap.min.css">
-    <link rel="stylesheet" href="styles.css">
-  </head>
-  <body>
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Panel de administración | ARCHIVOAPP</title>
 
-    <!-- BARRA DE NAVEGACIÓN  -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <a class="navbar-brand" href=".">ProductApp</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="https://bootswatch.com/4/superhero/bootstrap.min.css">
 
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav ml-auto">
+  <!-- Estilos -->
+  <link rel="stylesheet" href="styles.css">
 
-          <!-- 🔵 ESTE ES EL ÚNICO CÓDIGO QUE SE AGREGA -->
-          <li class="nav-item">
-            <a class="btn btn-sm btn-outline-light ml-2" href="estadisticas.html">Estadísticas</a>
-          </li>
-          <!-- 🔵 FIN DE LO AGREGADO -->
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-        </ul>
+  <!-- Admin JS -->
+  <script src="admin.js" defer></script>
+</head>
 
-          <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" name="search" id="search" type="search" placeholder="ID, marca o descripción" aria-label="Search">
-            <button class="btn btn-success my-2 my-sm-0" type="submit">Buscar</button>
-          </form>
-      </div>
-    </nav>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="admin.html">ARCHIVOAPP</a>
+   <a class="navbar-brand" href="index.html">Catalogo</a>
 
-    <div class="container">
-      <div class="row p-4">
-        <div class="col-md-5">
-          <div class="card">
-            <div class="card-body">
-              <!-- FORMULARIO PARA AGREGAR PRODUCTO -->
-              <form id="product-form">
-                <div class="form-group">
-                  <input class="form-control" type="text" id="name" placeholder="Nombre de producto">
-                </div>
-                <div class="form-group">
-                <label>Marca</label>
-                <select class="form-control" id="marca" required>
-                  <option value="">Seleccione una marca...</option>
-                  <option value="Sony">Sony</option>
-                  <option value="Samsung">Samsung</option>
-                  <option value="LG">LG</option>
-                  <option value="HP">HP</option>
-                  <option value="Dell">Dell</option>
-                  <option value="Apple">Apple</option>
-                  <option value="Motorola">Motorola</option>
-                  <option value="Asus">Asus</option>
-                  <option value="Xiaomi">Xiaomi</option>
-                  <option value="Amazon">Amamzon</option>
-                  <option value="Lenovo">Lenovo</option>
-                  <option value="ZTE">ZTE</option>
-                  <option value="Nintendo">Nintendo</option>
-                  <option value="Playstation">Playstation</option>
-                  <option value="Xbox">Xbox</option>
-                  <option value="Nokia">Nokia</option>
-                  <option value="Oppo">Oppo</option>
-                  <option value="Google">Google</option>
-                  <option value="Toshiba">Toshiba</option>
-                  <option value=""></option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label>Modelo</label>
-                <input class="form-control" type="text" id="modelo" placeholder="Modelo">
-              </div>
+  <button class="navbar-toggler" type="button" data-toggle="collapse"
+          data-target="#navbarNav" aria-controls="navbarNav"
+          aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
 
-              <div class="form-group">
-                <label>Precio</label>
-                <input class="form-control" type="number" id="precio" step="0.01" placeholder="Precio">
-              </div>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item">
+        <a class="btn btn-sm btn-outline-light mr-2" href="estadisticas.html">Estadísticas</a>
+      </li>
+      <li class="nav-item">
+        <a class="btn btn-sm btn-outline-light mr-2" href="login.html">Login</a>
+      </li>
+      <li class="nav-item">
+        <a class="btn btn-sm btn-outline-light" href="signup.html">Registro</a>
+      </li>
+    </ul>
 
-              <div class="form-group">
-                <label>Detalles (opcional)</label>
-                <input class="form-control" type="text" id="detalles" placeholder="Detalles del producto">
-              </div>
+    <!-- 🔎 BUSCADOR EN TIEMPO REAL -->
+    <form class="form-inline ml-3">
+      <input class="form-control" id="search"
+             type="search"
+             placeholder="Buscar por ID, título, descripción..."
+             aria-label="Buscar">
+    </form>
+  </div>
+</nav>
 
-              <div class="form-group">
-                <label>Unidades</label>
-                <input class="form-control" type="number" id="unidades" placeholder="Unidades en almacén">
-              </div>
+<div class="container mt-4">
 
-              <div class="form-group">
-                <label>Imagen (opcional)</label>
-                <input class="form-control" type="text" id="imagen" placeholder="Ruta de la imagen">
-              </div>
-                <input type="hidden" id="productId">
-                <button class="btn btn-primary btn-block text-center" type="submit">
-                  Agregar Producto
-                </button>
-              </form>
-            </div>
-          </div>
+  <div class="row">
+    <div class="col-md-4">
+      <h3>Nuevo recurso digital</h3>
+
+      <form id="product-form" enctype="multipart/form-data">
+
+        <input type="hidden" id="productId" name="id">
+
+        <div class="form-group">
+          <label for="titulo">Título del recurso</label>
+          <input type="text" class="form-control" id="titulo" name="titulo" required>
         </div>
 
-        <!-- TABLA  -->
-        <div class="col-md-7">
-          <div class="card my-4" id="product-result">
-            <div class="card-body">
-              <!-- RESULTADO -->
-              <ul id="container"></ul>
-            </div>
-          </div>
-
-          <table class="table table-bordered table-sm">
-            <thead>
-              <tr>
-                <td>Id</td>
-                <td>Nombre</td>
-                <td>Descripción</td>
-              </tr>
-            </thead>
-            <tbody id="products"></tbody>
-          </table>
+        <div class="form-group">
+          <label for="descripcion">Descripción</label>
+          <input type="text" class="form-control" id="descripcion" name="descripcion">
         </div>
-      </div>
+
+        <div class="form-group">
+          <label for="lenguaje">Lenguaje</label>
+          <select class="form-control" id="lenguaje" name="lenguaje">
+            <option value="">Selecciona lenguaje…</option>
+            <option value="C++">C++</option>
+            <option value="C">C</option>
+            <option value="Java">Java</option>
+            <option value="Python">Python</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="tipo_recurso">Tipo de recurso</label>
+          <select class="form-control" id="tipo_recurso" name="tipo_recurso">
+            <option value="">Selecciona tipo…</option>
+            <option value="ejemplo_codigo">Ejemplo de código</option>
+            <option value="documentacion">Documentación</option>
+            <option value="proyecto">Proyecto</option>
+            <option value="plantilla">Plantilla</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Archivo (PDF, TXT, ZIP, etc.)</label>
+          <input type="file" class="form-control" id="archivo" name="archivo">
+        </div>
+
+        <button class="btn btn-warning btn-block mt-2" type="submit">
+          Guardar recurso
+        </button>
+
+        <div id="msg-recurso" class="mt-2 text-info"></div>
+
+      </form>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
-      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-      crossorigin="anonymous"></script>
-    <!-- Lógica del Frontend -->
-    <script src="admin.js"></script>
-  </body>
+    <div class="col-md-8">
+      <h3>Recursos registrados</h3>
 
+      <table class="table table-bordered table-sm">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Título</th>
+            <th>Lenguaje</th>
+            <th>Tipo</th>
+            <th>Formato</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody id="products"></tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+
+
+</body>
 </html>
