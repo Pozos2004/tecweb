@@ -1,83 +1,83 @@
 <?php
-require_once __DIR__ . '/../vendor/autoload.php';
+header('Content-Type: application/json; charset=utf-8');
+mysqli_report(MYSQLI_REPORT_OFF);
 
-use TECWEB\MYAPI\DataBase;
-
-class StatsDownloads extends DataBase {
-    private $data;
-
-    public function __construct($db, $user='root', $pass='') {
-        $this->data = [];
-        parent::__construct($db, $user, $pass);
-    }
-
-    public function build() {
-        $this->data = [
-            "por_dia_semana" => $this->porDiaSemana(),
-            "por_hora"       => $this->porHora(),
-            "por_marca"      => $this->porMarca()
-        ];
-    }
-
-    private function porDiaSemana() {
-        $resultados = [];
-        $sql = "
-            SELECT DAYNAME(fecha_hora) AS dia, COUNT(*) AS total
-            FROM bitacora_descargas
-            GROUP BY dia
-            ORDER BY total DESC
-        ";
-        if ($res = $this->conexion->query($sql)) {
-            while ($row = $res->fetch_assoc()) {
-                $resultados[] = $row;
-            }
-            $res->free();
-        }
-        return $resultados;
-    }
-
-    private function porHora() {
-        $resultados = [];
-        $sql = "
-            SELECT HOUR(fecha_hora) AS hora, COUNT(*) AS total
-            FROM bitacora_descargas
-            GROUP BY hora
-            ORDER BY hora
-        ";
-        if ($res = $this->conexion->query($sql)) {
-            while ($row = $res->fetch_assoc()) {
-                $resultados[] = $row;
-            }
-            $res->free();
-        }
-        return $resultados;
-    }
-
-    private function porMarca() {
-        $resultados = [];
-        $sql = "
-            SELECT p.marca AS marca, COUNT(*) AS total
-            FROM bitacora_descargas b
-            JOIN productos p ON b.producto_id = p.id
-            GROUP BY p.marca
-            ORDER BY total DESC
-        ";
-        if ($res = $this->conexion->query($sql)) {
-            while ($row = $res->fetch_assoc()) {
-                $resultados[] = $row;
-            }
-            $res->free();
-        }
-        return $resultados;
-    }
-
-    public function getData() {
-        return json_encode($this->data, JSON_PRETTY_PRINT);
-    }
+$cnx = mysqli_connect('localhost','root','','marketzone');
+if (!$cnx) {
+    echo json_encode(["status"=>"error", "message"=>"Error BD"]);
+    exit;
 }
 
-header('Content-Type: application/json; charset=utf-8');
+/*--------------------------------
+  DESCARGAS POR DÍA
+--------------------------------*/
+$q1 = "
+SELECT DAYNAME(fecha_hora) AS dia, COUNT(*) AS total
+FROM bitacora_descargas
+GROUP BY DAYNAME(fecha_hora)
+";
+$r1 = mysqli_query($cnx, $q1);
 
-$stats = new StatsDownloads('marketzone');
-$stats->build();
-echo $stats->getData();
+$labels_dia = [];
+$data_dia   = [];
+
+while ($row = mysqli_fetch_assoc($r1)) {
+    $labels_dia[] = $row['dia'];
+    $data_dia[]   = intval($row['total']);
+}
+
+/*--------------------------------
+  DESCARGAS POR HORA
+--------------------------------*/
+$q2 = "
+SELECT HOUR(fecha_hora) AS hora, COUNT(*) AS total
+FROM bitacora_descargas
+GROUP BY HOUR(fecha_hora)
+";
+$r2 = mysqli_query($cnx, $q2);
+
+$labels_hora = [];
+$data_hora   = [];
+
+while ($row = mysqli_fetch_assoc($r2)) {
+    $labels_hora[] = $row['hora'];
+    $data_hora[]   = intval($row['total']);
+}
+
+/*--------------------------------
+  DESCARGAS POR TIPO (CORRECTO)
+--------------------------------*/
+$q3 = "
+SELECT a.tipo_recurso AS tipo, COUNT(*) AS total
+FROM bitacora_descargas b
+JOIN archivos a ON a.id = b.archivo_id
+GROUP BY a.tipo_recurso
+";
+$r3 = mysqli_query($cnx, $q3);
+
+$labels_tipo = [];
+$data_tipo   = [];
+
+while ($row = mysqli_fetch_assoc($r3)) {
+    $labels_tipo[] = $row['tipo'];
+    $data_tipo[]   = intval($row['total']);
+}
+
+/*--------------------------------
+  RESPUESTA JSON FINAL
+--------------------------------*/
+echo json_encode([
+    "status" => "success",
+    "por_dia" => [
+        "labels" => $labels_dia,
+        "data"   => $data_dia
+    ],
+    "por_hora" => [
+        "labels" => $labels_hora,
+        "data"   => $data_hora
+    ],
+    "por_tipo" => [
+        "labels" => $labels_tipo,
+        "data"   => $data_tipo
+    ]
+]);
