@@ -1,61 +1,65 @@
-$(function(){
-  $.get('./backend/stats-downloads.php', function(resp){
+// estadisticas.js
+$(function () {
+  $.get('./backend/stats-downloads.php', function (resp) {
     console.log('Stats resp:', resp);
 
     let data;
     try {
       data = (typeof resp === 'string') ? JSON.parse(resp) : resp;
-    } catch(e) {
-      console.error('No es JSON válido', resp);
+    } catch (e) {
+      console.error('Error parseando JSON de estadísticas:', resp, e);
       return;
     }
 
-    // 1) Por día de la semana
-    const dias = data.por_dia_semana.map(r => r.dia);
-    const totalDias = data.por_dia_semana.map(r => r.total);
+    if (data.status !== 'success') {
+      console.error('Error en stats:', data.message);
+      return;
+    }
 
-    const ctxDia = document.getElementById('chartDiaSemana').getContext('2d');
-    new Chart(ctxDia, {
-      type: 'bar',
-      data: {
-        labels: dias,
-        datasets: [{
-          label: 'Descargas',
-          data: totalDias
-        }]
-      }
-    });
+    // ---------- Gráfica 1: día ----------
+    const ctxDia = document.getElementById('chartDiaSemana');
+    if (ctxDia) {
+      new Chart(ctxDia, {
+        type: 'bar',
+        data: {
+          labels: data.por_dia.labels,
+          datasets: [{
+            label: 'Descargas',
+            data: data.por_dia.data
+          }]
+        }
+      });
+    }
 
-    // 2) Por hora
-    const horas = data.por_hora.map(r => r.hora);
-    const totalHoras = data.por_hora.map(r => r.total);
+    // ---------- Gráfica 2: hora ----------
+    const ctxHora = document.getElementById('chartHora');
+    if (ctxHora) {
+      new Chart(ctxHora, {
+        type: 'line',
+        data: {
+          labels: data.por_hora.labels,
+          datasets: [{
+            label: 'Descargas',
+            data: data.por_hora.data
+          }]
+        }
+      });
+    }
 
-    const ctxHora = document.getElementById('chartHora').getContext('2d');
-    new Chart(ctxHora, {
-      type: 'line',
-      data: {
-        labels: horas,
-        datasets: [{
-          label: 'Descargas',
-          data: totalHoras
-        }]
-      }
-    });
+    // ---------- Gráfica 3: tipo ----------
+    const ctxTipo = document.getElementById('chartMarca');
+    if (ctxTipo) {
+      new Chart(ctxTipo, {
+        type: 'pie',
+        data: {
+          labels: data.por_tipo.labels,
+          datasets: [{
+            label: 'Descargas',
+            data: data.por_tipo.data
+          }]
+        }
+      });
+    }
 
-    // 3) Por marca
-    const marcas = data.por_marca.map(r => r.marca);
-    const totalMarcas = data.por_marca.map(r => r.total);
-
-    const ctxMarca = document.getElementById('chartMarca').getContext('2d');
-    new Chart(ctxMarca, {
-      type: 'pie',
-      data: {
-        labels: marcas,
-        datasets: [{
-          label: 'Descargas',
-          data: totalMarcas
-        }]
-      }
-    });
   });
 });
